@@ -89,22 +89,32 @@ function Bedroom() {
   return (
     <>
       {/* Fluted headboard wall + cove wash */}
-      <B x0={5 + PART} x1={12} y0={0} y1={0.22} z0={0} z1={CEILING - 0.5} m="accent" />
-      <B x0={5 + PART} x1={12} y0={0.24} y1={0.3} z0={CEILING - 0.6} z1={CEILING - 0.55} m="led" cast={false} />
-      <B x0={6.1} x1={11.3} y0={0.22} y1={0.5} z0={1.2} z1={4.3} m="fabric" />
+      <B x0={3} x1={11} y0={0} y1={0.22} z0={0} z1={CEILING - 0.5} m="accent" />
+      <B x0={3} x1={11} y0={0.24} y1={0.3} z0={CEILING - 0.6} z1={CEILING - 0.55} m="led" cast={false} />
+      <B x0={4.4} x1={9.6} y0={0.22} y1={0.5} z0={1.2} z1={4.3} m="fabric" />
       {/* Floating bed */}
-      <B x0={6.6} x1={10.8} y0={0.7} y1={6.3} z0={0} z1={0.6} m="black" />
-      <B x0={6.55} x1={10.85} y0={0.65} y1={6.35} z0={0.03} z1={0.07} m="led" cast={false} />
-      <B x0={6.2} x1={11.2} y0={0.5} y1={6.75} z0={0.6} z1={1.05} m="wood" />
-      <B x0={6.3} x1={11.1} y0={0.6} y1={6.65} z0={1.05} z1={1.75} m="white" />
-      <B x0={6.24} x1={11.16} y0={3} y1={6.72} z0={1.5} z1={1.9} m="fabric2" />
-      <B x0={6.6} x1={8.55} y0={0.75} y1={1.75} z0={1.75} z1={2.25} m="white" />
-      <B x0={8.85} x1={10.8} y0={0.75} y1={1.75} z0={1.75} z1={2.25} m="white" />
+      <B x0={4.9} x1={9.1} y0={0.7} y1={6.3} z0={0} z1={0.6} m="black" />
+      <B x0={4.85} x1={9.15} y0={0.65} y1={6.35} z0={0.03} z1={0.07} m="led" cast={false} />
+      <B x0={4.5} x1={9.5} y0={0.5} y1={6.75} z0={0.6} z1={1.05} m="wood" />
+      <B x0={4.6} x1={9.4} y0={0.6} y1={6.65} z0={1.05} z1={1.75} m="white" />
+      <B x0={4.54} x1={9.46} y0={3} y1={6.72} z0={1.5} z1={1.9} m="fabric2" />
+      <B x0={4.9} x1={6.85} y0={0.75} y1={1.75} z0={1.75} z1={2.25} m="white" />
+      <B x0={7.15} x1={9.1} y0={0.75} y1={1.75} z0={1.75} z1={2.25} m="white" />
       {/* Floating nightstands + pendants */}
-      <B x0={5.45} x1={6.1} y0={0.22} y1={1.4} z0={1.6} z1={2.2} m="wood" />
-      <B x0={11.3} x1={11.95} y0={0.22} y1={1.4} z0={1.6} z1={2.2} m="wood" />
-      <Pendant x={5.78} y={0.9} drop={5.2} />
-      <Pendant x={11.62} y={0.9} drop={5.2} />
+      <B x0={3.75} x1={4.4} y0={0.22} y1={1.4} z0={1.6} z1={2.2} m="wood" />
+      <B x0={9.6} x1={10.25} y0={0.22} y1={1.4} z0={1.6} z1={2.2} m="wood" />
+      <Pendant x={4.08} y={0.9} drop={5.2} />
+      <Pendant x={9.92} y={0.9} drop={5.2} />
+      {/* Study desk under the north window */}
+      <B x0={0} x1={1.75} y0={1.6} y1={5.1} z0={2.4} z1={2.55} m="wood" />
+      <B x0={0} x1={1.7} y0={1.65} y1={5.05} z0={2.35} z1={2.4} m="led" cast={false} />
+      <B x0={0} x1={1.2} y0={1.6} y1={2.6} z0={1.2} z1={2.4} m="wood" />
+      <mesh position={[2.4, 1.5, 3.35]} material={mats.fabric2} castShadow>
+        <cylinderGeometry args={[0.6, 0.55, 0.2, 20]} />
+      </mesh>
+      <mesh position={[2.4, 0.7, 3.35]} material={mats.metal}>
+        <cylinderGeometry args={[0.05, 0.3, 1.4, 10]} />
+      </mesh>
       {/* 7 ft sliding wardrobe + loft */}
       <B x0={0} x1={1.95} y0={7.5} y1={14.5} z0={0} z1={CEILING} m="wood" />
       <B x0={1.95} x1={2.02} y0={7.55} y1={11} z0={0.15} z1={6.9} m="accent" />
@@ -112,9 +122,9 @@ function Bedroom() {
       <B x0={1.95} x1={2.0} y0={7.55} y1={14.45} z0={7.05} z1={CEILING - 0.1} m="accent" />
       <B x0={2.02} x1={2.1} y0={10.85} y1={10.95} z0={3} z1={4.5} m="metal" />
       {/* Floating dresser + arched backlit mirror */}
-      <B x0={10.75} x1={12} y0={8} y1={11.5} z0={2.4} z1={2.85} m="wood" />
-      <Arch at={[12, 9.75]} w={2.2} h={3.8} z0={3.3} facing="-x" m="mirror" halo />
-      <mesh position={[10, 0.9, 9.75]} material={mats.fabric} castShadow>
+      <B x0={10.75} x1={12} y0={9} y1={12.5} z0={2.4} z1={2.85} m="wood" />
+      <Arch at={[12, 10.75]} w={2.2} h={3.8} z0={3.3} facing="-x" m="mirror" halo />
+      <mesh position={[10, 0.9, 10.75]} material={mats.fabric} castShadow>
         <cylinderGeometry args={[0.6, 0.55, 1.6, 20]} />
       </mesh>
       {/* Window bench */}
@@ -129,27 +139,27 @@ function Bedroom() {
 function Bath() {
   return (
     <>
-      {/* Wall-hung WC on the north wall */}
-      <B x0={0.02} x1={1.75} y0={3.8} y1={4.95} z0={1.0} z1={1.45} m="white" />
-      <B x0={0.02} x1={0.6} y0={3.75} y1={5.0} z0={0.7} z1={2.6} m="white" />
-      <B x0={0.02} x1={0.06} y0={4.1} y1={4.65} z0={3.1} z1={3.5} m="metal" />
-      {/* Floating vanity + basin on the bath partition */}
-      <B x0={3.65} x1={5} y0={3.2} y1={4.7} z0={2.0} z1={2.65} m="wood" />
-      <mesh position={[4.3, 2.8, 3.95]} material={mats.white} castShadow>
+      {/* Wall-hung WC on the east wall */}
+      <B x0={20.05} x1={20.9} y0={0.02} y1={1.75} z0={1.0} z1={1.45} m="white" />
+      <B x0={19.85} x1={21.1} y0={0.02} y1={0.6} z0={0.7} z1={2.6} m="white" />
+      <B x0={20.2} x1={20.75} y0={0.02} y1={0.06} z0={3.1} z1={3.5} m="metal" />
+      {/* Floating vanity + basin on the wet wall shared with the kitchenette */}
+      <B x0={18} x1={19.35} y0={1.6} y1={3.1} z0={2.0} z1={2.65} m="wood" />
+      <mesh position={[18.675, 2.8, 2.35]} material={mats.white} castShadow>
         <cylinderGeometry args={[0.55, 0.45, 0.3, 28]} />
       </mesh>
-      <B x0={4.85} x1={5} y0={3.9} y1={4.0} z0={2.9} z1={3.4} m="metal" />
-      <Arch at={[5, 3.95]} w={1.4} h={3} z0={3.6} facing="-x" m="mirror" halo />
-      {/* Hand shower + LED niche */}
-      <B x0={0.02} x1={0.15} y0={1.25} y1={1.6} z0={3.4} z1={3.75} m="metal" />
-      <B x0={0.05} x1={0.12} y0={1.38} y1={1.46} z0={3.75} z1={6.2} m="metal" />
-      <B x0={0.1} x1={0.35} y0={1.3} y1={1.55} z0={6.2} z1={6.4} m="metal" />
-      <B x0={2} x1={4} y0={0.02} y1={0.25} z0={3.7} z1={3.75} m="led" cast={false} />
-      <B x0={2} x1={4} y0={0.02} y1={0.18} z0={3.5} z1={4.6} m="bathTile" />
+      <B x0={18} x1={18.15} y0={2.3} y1={2.4} z0={2.9} z1={3.4} m="metal" />
+      <Arch at={[18, 2.35]} w={1.4} h={3} z0={3.6} facing="+x" m="mirror" halo />
+      {/* Hand shower on the stair-side wall + LED niche */}
+      <B x0={24.85} x1={24.98} y0={3.6} y1={3.95} z0={3.4} z1={3.75} m="metal" />
+      <B x0={24.88} x1={24.95} y0={3.73} y1={3.81} z0={3.75} z1={6.2} m="metal" />
+      <B x0={24.65} x1={24.9} y0={3.65} y1={3.9} z0={6.2} z1={6.4} m="metal" />
+      <B x0={22.75} x1={24.75} y0={0.02} y1={0.25} z0={3.5} z1={3.55} m="led" cast={false} />
+      <B x0={22.75} x1={24.75} y0={0.02} y1={0.18} z0={3.3} z1={4.4} m="bathTile" />
       {/* Towel rail by the door */}
-      <B x0={0.1} x1={0.2} y0={5.6} y1={6.7} z0={4.2} z1={4.28} m="metal" />
-      <B x0={0.15} x1={0.32} y0={5.65} y1={6.65} z0={3.1} z1={4.25} m="fabric" />
-      <mesh position={[2.5, BATH_LIGHT, 3.5]} material={mats.led}>
+      <B x0={18.02} x1={18.12} y0={3.4} y1={4.5} z0={4.2} z1={4.28} m="metal" />
+      <B x0={18.07} x1={18.24} y0={3.45} y1={4.45} z0={3.1} z1={4.25} m="fabric" />
+      <mesh position={[21.5, BATH_LIGHT, 2.4]} material={mats.led}>
         <cylinderGeometry args={[0.25, 0.25, 0.04, 20]} />
       </mesh>
     </>
@@ -159,57 +169,67 @@ function Bath() {
 function Hall({ arches, plants }: { arches: boolean; plants: number }) {
   return (
     <>
-      {/* Kitchenette run on the east wall */}
-      <B x0={14.45} x1={21} y0={0.1} y1={1.85} z0={0} z1={0.33} m="black" />
-      <B x0={14.45} x1={21} y0={0} y1={2} z0={0.33} z1={2.75} m="wood" />
-      <B x0={14.4} x1={21} y0={0} y1={2.1} z0={2.75} z1={2.9} m="counter" />
+      {/* L-shaped kitchenette: fridge + hob on the east wall, sink on the bath's wet wall */}
+      <B x0={14.45} x1={17.625} y0={0.1} y1={1.85} z0={0} z1={0.33} m="black" />
+      <B x0={15.775} x1={17.625} y0={1.85} y1={4.45} z0={0} z1={0.33} m="black" />
+      <B x0={14.45} x1={17.625} y0={0} y1={2} z0={0.33} z1={2.75} m="wood" />
+      <B x0={15.625} x1={17.625} y0={2} y1={4.6} z0={0.33} z1={2.75} m="wood" />
+      <B x0={14.4} x1={17.625} y0={0} y1={2.1} z0={2.75} z1={2.9} m="counter" />
+      <B x0={15.525} x1={17.625} y0={2.1} y1={4.7} z0={2.75} z1={2.9} m="counter" />
       <B x0={12.4} x1={14.4} y0={0} y1={2.2} z0={0} z1={6.3} m="steel" />
       <B x0={14.3} x1={14.38} y0={2.0} y1={2.1} z0={2} z1={5} m="metal" />
-      <B x0={15.6} x1={17.2} y0={0.4} y1={1.6} z0={2.88} z1={2.92} m="black" />
-      <B x0={16.3} x1={16.45} y0={0.2} y1={0.35} z0={2.9} z1={3.8} m="metal" />
-      <B x0={16.3} x1={16.45} y0={0.2} y1={0.9} z0={3.7} z1={3.8} m="metal" />
-      <B x0={18.4} x1={20.2} y0={0.3} y1={1.7} z0={2.9} z1={2.93} m="black" />
-      {[18.85, 19.75].map(x => (
+      <B x0={16.0} x1={17.2} y0={2.8} y1={4.0} z0={2.88} z1={2.92} m="black" />
+      <B x0={17.3} x1={17.45} y0={3.33} y1={3.48} z0={2.9} z1={3.8} m="metal" />
+      <B x0={16.85} x1={17.45} y0={3.33} y1={3.48} z0={3.7} z1={3.8} m="metal" />
+      <B x0={15.25} x1={17.05} y0={0.3} y1={1.7} z0={2.9} z1={2.93} m="black" />
+      {[15.7, 16.6].map(x => (
         <mesh key={x} position={[x, 2.95, 1]} rotation={[-Math.PI / 2, 0, 0]} material={mats.ledCool}>
           <ringGeometry args={[0.22, 0.27, 24]} />
         </mesh>
       ))}
-      <B x0={18.45} x1={20.15} y0={0} y1={1.7} z0={5.3} z1={5.8} m="metal" />
-      <B x0={18.95} x1={19.65} y0={0} y1={0.7} z0={5.8} z1={7.8} m="metal" />
-      <B x0={14.45} x1={18.4} y0={0} y1={1.15} z0={4.75} z1={7.4} m="accent" />
-      <B x0={20.2} x1={21} y0={0} y1={1.15} z0={4.75} z1={7.4} m="accent" />
-      <B x0={14.45} x1={21} y0={0.95} y1={1.05} z0={4.7} z1={4.75} m="led" cast={false} />
-      {/* Floating shoe cabinet + mirror */}
-      <B x0={23.6} x1={W} y0={4} y1={6} z0={0.6} z1={3.2} m="wood" />
-      <B x0={23.55} x1={W} y0={3.95} y1={6.05} z0={0.53} z1={0.58} m="led" cast={false} />
-      <mesh position={[W - 0.05, 5.3, 5]} rotation={[0, -Math.PI / 2, 0]} material={mats.mirror}>
+      <B x0={15.3} x1={17} y0={0} y1={1.7} z0={5.3} z1={5.8} m="metal" />
+      <B x0={15.8} x1={16.5} y0={0} y1={0.7} z0={5.8} z1={7.8} m="metal" />
+      <B x0={14.45} x1={15.3} y0={0} y1={1.15} z0={4.75} z1={7.4} m="accent" />
+      <B x0={16.5} x1={17.625} y0={2.1} y1={4.6} z0={4.75} z1={7.4} m="accent" />
+      <B x0={14.45} x1={15.3} y0={0.95} y1={1.05} z0={4.7} z1={4.75} m="led" cast={false} />
+      <B x0={16.55} x1={16.65} y0={2.1} y1={4.6} z0={4.7} z1={4.75} m="led" cast={false} />
+      {/* Floating shoe cabinet + mirror by the entry */}
+      <B x0={23.6} x1={W} y0={8.75} y1={10.75} z0={0.6} z1={3.2} m="wood" />
+      <B x0={23.55} x1={W} y0={8.7} y1={10.8} z0={0.53} z1={0.58} m="led" cast={false} />
+      <mesh position={[W - 0.05, 5.3, 9.75]} rotation={[0, -Math.PI / 2, 0]} material={mats.mirror}>
         <circleGeometry args={[0.9, 32]} />
       </mesh>
-      {/* Fluted TV wall + floating console */}
-      <B x0={24.82} x1={W} y0={6.25} y1={11.25} z0={0} z1={8.6} m="accent" />
-      <B x0={23.6} x1={24.82} y0={6.25} y1={11.25} z0={1} z1={1.9} m="wood" />
-      <B x0={23.55} x1={24.82} y0={6.2} y1={11.3} z0={0.93} z1={0.98} m="led" cast={false} />
-      <B x0={24.62} x1={24.8} y0={6.75} y1={10.75} z0={3.4} z1={5.75} m="tv" />
-      {/* Sofa-cum-bed */}
-      <B x0={12.6} x1={15.25} y0={5.5} y1={11.5} z0={0.35} z1={1.45} m="fabric" />
-      <B x0={12.4} x1={13.3} y0={5.5} y1={11.5} z0={1.45} z1={2.9} m="fabric" />
-      <B x0={13.3} x1={15.25} y0={5.5} y1={6.05} z0={1.45} z1={2.15} m="fabric" />
-      <B x0={13.3} x1={15.25} y0={10.95} y1={11.5} z0={1.45} z1={2.15} m="fabric" />
-      <B x0={13.3} x1={15.1} y0={6.1} y1={8.45} z0={1.45} z1={1.8} m="fabric" />
-      <B x0={13.3} x1={15.1} y0={8.55} y1={10.9} z0={1.45} z1={1.8} m="fabric" />
-      <B x0={13.3} x1={13.75} y0={6.4} y1={7.5} z0={1.8} z1={2.8} m="fabric2" />
-      <B x0={13.3} x1={13.75} y0={9.5} y1={10.6} z0={1.8} z1={2.8} m="fabric2" />
+      {/* TV wall on the bedroom partition: arch (Boho) or fluted panel, floating console */}
+      {arches ? (
+        <Arch at={[12 + PART, 10.75]} w={4.5} h={8} z0={0} facing="+x" m="accent" />
+      ) : (
+        <B x0={12 + PART} x1={12.55} y0={8.5} y1={13} z0={0} z1={8.6} m="accent" />
+      )}
+      <B x0={12.55} x1={13.6} y0={8.75} y1={12.75} z0={1} z1={1.9} m="wood" />
+      <B x0={12.55} x1={13.65} y0={8.7} y1={12.8} z0={0.93} z1={0.98} m="led" cast={false} />
+      <B x0={12.6} x1={12.75} y0={8.85} y1={12.65} z0={3.4} z1={5.75} m="tv" />
+      {/* Floating sofa-cum-bed facing the TV, back to the entry path */}
+      <B x0={17.9} x1={20.1} y0={8.8} y1={13.2} z0={0} z1={0.35} m="black" />
+      <B x0={17.85} x1={20.15} y0={8.75} y1={13.25} z0={0.03} z1={0.07} m="led" cast={false} />
+      <B x0={17.6} x1={20.4} y0={8.5} y1={13.5} z0={0.35} z1={1.45} m="fabric" />
+      <B x0={19.5} x1={20.4} y0={8.5} y1={13.5} z0={1.45} z1={2.9} m="fabric" />
+      <B x0={17.6} x1={19.5} y0={8.5} y1={9.05} z0={1.45} z1={2.15} m="fabric" />
+      <B x0={17.6} x1={19.5} y0={12.95} y1={13.5} z0={1.45} z1={2.15} m="fabric" />
+      <B x0={17.75} x1={19.5} y0={9.1} y1={10.95} z0={1.45} z1={1.8} m="fabric" />
+      <B x0={17.75} x1={19.5} y0={11.05} y1={12.9} z0={1.45} z1={1.8} m="fabric" />
+      <B x0={19.05} x1={19.5} y0={9.4} y1={10.5} z0={1.8} z1={2.8} m="fabric2" />
+      <B x0={19.05} x1={19.5} y0={11.5} y1={12.6} z0={1.8} z1={2.8} m="fabric2" />
       {/* Nesting coffee tables */}
-      <mesh position={[17.6, 1.3, 8.6]} material={mats.wood} castShadow>
+      <mesh position={[15.7, 1.3, 10.6]} material={mats.wood} castShadow>
         <cylinderGeometry args={[1, 1, 0.12, 40]} />
       </mesh>
-      <mesh position={[17.6, 0.62, 8.6]} material={mats.metal}>
+      <mesh position={[15.7, 0.62, 10.6]} material={mats.metal}>
         <cylinderGeometry args={[0.18, 0.4, 1.25, 16]} />
       </mesh>
-      <mesh position={[18.5, 0.95, 9.5]} material={mats.counter} castShadow>
+      <mesh position={[16.6, 0.95, 9.5]} material={mats.counter} castShadow>
         <cylinderGeometry args={[0.65, 0.65, 0.1, 32]} />
       </mesh>
-      <mesh position={[18.5, 0.45, 9.5]} material={mats.metal}>
+      <mesh position={[16.6, 0.45, 9.5]} material={mats.metal}>
         <cylinderGeometry args={[0.1, 0.25, 0.9, 12]} />
       </mesh>
       {/* Window bar for two */}
@@ -227,20 +247,11 @@ function Hall({ arches, plants }: { arches: boolean; plants: number }) {
           <Pendant x={x} y={14.4} drop={3.6} />
         </group>
       ))}
-      {/* Feature wall behind the sofa: arch (Boho) or framed art */}
-      {arches ? (
-        <Arch at={[12 + PART, 8.5]} w={4.6} h={7.6} z0={0} facing="+x" m="accent" />
-      ) : (
-        <>
-          <B x0={12 + PART} x1={12.45} y0={6.6} y1={10.4} z0={4} z1={6.6} m="frame" />
-          <B x0={12.45} x1={12.48} y0={6.75} y1={10.25} z0={4.15} z1={6.45} m="accent" />
-        </>
-      )}
       <Plant x={24.3} y={12.5} />
-      {plants >= 3 && <Plant x={21.6} y={1.4} s={0.6} />}
+      {plants >= 3 && <Plant x={24.4} y={14.3} s={0.6} />}
       {plants >= 4 && <Plant x={14.7} y={12.4} hanging />}
       {plants >= 5 && <Plant x={4.5} y={12.8} hanging />}
-      {plants >= 6 && <Plant x={22} y={14.2} s={0.75} />}
+      {plants >= 6 && <Plant x={18.7} y={14.3} s={0.75} />}
       {plants >= 6 && <Plant x={9.6} y={14.2} hanging />}
     </>
   )

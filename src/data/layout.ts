@@ -8,6 +8,22 @@ export const PART = 0.375 // 4.5" partition
 export const CEILING = 10
 export const BATH_CEILING = 8
 export const SITOUT_DEPTH = 12
+/** Inner face of the far (west) parapet: the terrace is 39 ft from the east wall. */
+export const TERRACE_END = 39
+export const PARAPET_H = 3.5
+
+/** Stair from the floor below, outside the south wall: landing at the entry, flight descending west. */
+export const STAIR = {
+  x0: W + EXT,
+  x1: 28.95,
+  landingY0: 4.95,
+  landingY1: 8.7,
+  landingTop: -0.5,
+  treads: 9,
+  tread: 0.83,
+  rise: 0.55,
+}
+export const stairEndY = STAIR.landingY1 + STAIR.treads * STAIR.tread
 
 export const ROOF = {
   eastY: -EXT,
@@ -16,8 +32,8 @@ export const ROOF = {
   edgeHeight: 9.75,
   thickness: 0.25,
   overhang: 1,
-  skylight: { x0: 7.2, x1: 10.2, y0: 1.25, y1: 4.25 },
-  posts: [0, 12.5, 25],
+  skylight: { x0: 5.5, x1: 8.5, y0: 1.25, y1: 4.25 },
+  posts: [0.2, 12.5, 24.8],
 }
 
 export const roofSlope = (ROOF.eastHeight - ROOF.edgeHeight) / (ROOF.edgeY - ROOF.eastY)
@@ -56,22 +72,23 @@ export const walls: Wall[] = [
     id: 'east', axis: 'x', at: -EXT, t: EXT, from: -EXT, to: W + EXT,
     top: [roofY(0), roofY(0)], exterior: true,
     openings: [
-      { id: 'bath-glassblock-e', from: 0.5, to: 3, sill: 4.5, head: 7, kind: 'glassblock' },
-      { id: 'chimney-vent', from: 18.9, to: 19.6, sill: 7.2, head: 7.8, kind: 'vent' },
+      { id: 'chimney-vent', from: 15.8, to: 16.5, sill: 7.2, head: 7.8, kind: 'vent' },
+      { id: 'bath-exhaust', from: 20.1, to: 20.9, sill: 6.9, head: 7.6, kind: 'vent' },
+      { id: 'bath-glassblock-e', from: 22.5, to: 24.5, sill: 4.5, head: 7, kind: 'glassblock' },
     ],
   },
   {
     id: 'north', axis: 'y', at: -EXT, t: EXT, from: -EXT, to: D + EXT,
     top: sideTop, exterior: true,
-    openings: [
-      { id: 'bath-glassblock-n', from: 0.5, to: 2.5, sill: 4.5, head: 7, kind: 'glassblock' },
-      { id: 'bath-exhaust', from: 4.6, to: 5.4, sill: 6.9, head: 7.6, kind: 'vent' },
-    ],
+    openings: [{ id: 'study-window', from: 1.5, to: 5, sill: 3, head: 7, kind: 'window' }],
   },
   {
     id: 'south', axis: 'y', at: W, t: EXT, from: -EXT, to: D + EXT,
     top: sideTop, exterior: true,
-    openings: [{ id: 'entry', from: 0.5, to: 3.75, sill: 0, head: 7, kind: 'door' }],
+    openings: [
+      { id: 'bath-glassblock-s', from: 0.5, to: 2.5, sill: 4.5, head: 7, kind: 'glassblock' },
+      { id: 'entry', from: 5.2, to: 8.45, sill: 0, head: 7, kind: 'door' },
+    ],
   },
   {
     id: 'west', axis: 'x', at: D, t: EXT, from: -EXT, to: W + EXT,
@@ -85,16 +102,16 @@ export const walls: Wall[] = [
   {
     id: 'p1', axis: 'y', at: 12, t: PART, from: 0, to: D,
     top: [CEILING, CEILING], exterior: false,
-    openings: [{ id: 'bedroom-door', from: 11.9, to: 14.6, sill: 0, head: 7, kind: 'hidden' }],
+    openings: [{ id: 'bedroom-door', from: 5.2, to: 7.9, sill: 0, head: 7, kind: 'hidden' }],
   },
   {
-    id: 'bath-side', axis: 'y', at: 5, t: PART, from: 0, to: 7 + PART,
+    id: 'bath-side', axis: 'y', at: 17.625, t: PART, from: 0, to: 4.75 + PART,
     top: [BATH_CEILING, BATH_CEILING], exterior: false, openings: [],
   },
   {
-    id: 'bath-front', axis: 'x', at: 7, t: PART, from: 0, to: 5,
+    id: 'bath-front', axis: 'x', at: 4.75, t: PART, from: 18, to: W,
     top: [BATH_CEILING, BATH_CEILING], exterior: false,
-    openings: [{ id: 'bath-door', from: 2.25, to: 4.75, sill: 0, head: 7, kind: 'sliding' }],
+    openings: [{ id: 'bath-door', from: 18.3, to: 20.8, sill: 0, head: 7, kind: 'sliding' }],
   },
 ]
 
@@ -113,19 +130,19 @@ export interface Room {
 export const rooms: Room[] = [
   {
     id: 'bedroom', name: 'Bedroom suite',
-    poly: [[5 + PART, 0], [12, 0], [12, D], [0, D], [0, 7 + PART], [5 + PART, 7 + PART]],
-    size: "12' × 15'", area: 140, labelAt: [7.5, 10.5],
+    poly: [[0, 0], [12, 0], [12, D], [0, D]],
+    size: "12' × 15'", area: 180, labelAt: [7, 10.2],
   },
-  { id: 'bath', name: 'Bathroom', poly: [[0, 0], [5, 0], [5, 7], [0, 7]], size: "5' × 7'", area: 35, labelAt: [2.5, 3.2] },
+  { id: 'bath', name: 'Bathroom', poly: [[18, 0], [W, 0], [W, 4.75], [18, 4.75]], size: "7' × 4'9\"", area: 33, labelAt: [21.5, 2.6] },
   {
     id: 'hall', name: 'Hall + kitchenette',
-    poly: [[12 + PART, 0], [W, 0], [W, D], [12 + PART, D]],
-    size: "12'7\" × 15'", area: 189, labelAt: [19, 6.5],
+    poly: [[12 + PART, 0], [17.625, 0], [17.625, 4.75 + PART], [W, 4.75 + PART], [W, D], [12 + PART, D]],
+    size: "12'7\" × 15' (L)", area: 152, labelAt: [18.8, 7],
   },
   {
-    id: 'sitout', name: 'Covered sit-out',
-    poly: [[0, D + EXT], [W, D + EXT], [W, ROOF.edgeY], [0, ROOF.edgeY]],
-    size: "25' × 12'", area: 300, labelAt: [12.5, 22],
+    id: 'sitout', name: 'Sit-out + open terrace',
+    poly: [[0, D + EXT], [W, D + EXT], [W, TERRACE_END], [0, TERRACE_END]],
+    size: "25' × 23'3\" (12' covered)", area: 581, labelAt: [12.5, 24],
   },
 ]
 
@@ -143,23 +160,26 @@ export interface Piece {
 
 export const furniture: Piece[] = [
   // Bedroom
-  { id: 'bed', label: 'Queen bed', x0: 6.2, y0: 0.25, x1: 11.2, y1: 6.75, solid: true },
-  { id: 'nightstand-l', label: '', x0: 5.45, y0: 0.25, x1: 6.15, y1: 1.4 },
-  { id: 'nightstand-r', label: '', x0: 11.25, y0: 0.25, x1: 11.95, y1: 1.4 },
+  { id: 'bed', label: 'Queen bed', x0: 4.5, y0: 0.25, x1: 9.5, y1: 6.75, solid: true },
+  { id: 'nightstand-l', label: '', x0: 3.75, y0: 0.25, x1: 4.45, y1: 1.4 },
+  { id: 'nightstand-r', label: '', x0: 9.55, y0: 0.25, x1: 10.25, y1: 1.4 },
+  { id: 'desk', label: 'Study', x0: 0, y0: 1.6, x1: 1.75, y1: 5.1, solid: true },
   { id: 'wardrobe', label: "7' wardrobe", x0: 0, y0: 7.5, x1: 2, y1: 14.5, solid: true },
-  { id: 'dresser', label: 'Dresser', x0: 10.75, y0: 8, x1: 12, y1: 11.5, solid: true },
+  { id: 'dresser', label: 'Dresser', x0: 10.75, y0: 9, x1: 12, y1: 12.5, solid: true },
   { id: 'bench', label: 'Window bench', x0: 4, y0: 13.75, x1: 8.5, y1: 15, solid: true },
   // Bath
-  { id: 'wc', label: 'WC', x0: 0, y0: 3.6, x1: 1.75, y1: 5.1, solid: true },
-  { id: 'basin', label: 'Basin', x0: 3.6, y0: 3.2, x1: 5, y1: 4.7, solid: true },
-  { id: 'shower', label: 'Hand shower', x0: 0, y0: 0, x1: 5, y1: 2.75 },
+  { id: 'wc', label: 'WC', x0: 19.85, y0: 0, x1: 21.1, y1: 1.75, solid: true },
+  { id: 'basin', label: 'Basin', x0: 18, y0: 1.6, x1: 19.35, y1: 3.1, solid: true },
+  { id: 'shower', label: 'Shower', x0: 22.25, y0: 0, x1: 25, y1: 4.75 },
   // Hall
-  { id: 'kitchen', label: "Kitchenette 8'7\"", x0: 12.375, y0: 0, x1: 21, y1: 2, solid: true },
-  { id: 'shoe', label: 'Shoe', x0: 23.75, y0: 4, x1: 25, y1: 6, solid: true },
-  { id: 'tv', label: 'TV wall', x0: 23.75, y0: 6.25, x1: 25, y1: 11.25, solid: true },
+  { id: 'fridge', label: 'Fridge', x0: 12.4, y0: 0, x1: 14.4, y1: 2.2, solid: true },
+  { id: 'kitchen', label: 'Hob', x0: 14.45, y0: 0, x1: 17.625, y1: 2.1, solid: true },
+  { id: 'sink', label: 'Sink', x0: 15.625, y0: 2.1, x1: 17.625, y1: 4.6, solid: true },
+  { id: 'shoe', label: 'Shoe', x0: 23.75, y0: 8.75, x1: 25, y1: 10.75, solid: true },
+  { id: 'tv', label: 'TV wall', x0: 12.375, y0: 8.5, x1: 13.75, y1: 13, solid: true },
   { id: 'plant', label: '', x0: 23.75, y0: 11.75, x1: 25, y1: 13.25, solid: true, shape: 'round' },
-  { id: 'sofa', label: 'Sofa-cum-bed', x0: 12.375, y0: 5.5, x1: 15.25, y1: 11.5, solid: true },
-  { id: 'coffee', label: '', x0: 16.6, y0: 7.6, x1: 18.6, y1: 9.6, solid: true, shape: 'round' },
+  { id: 'sofa', label: 'Sofa-cum-bed', x0: 17.6, y0: 8.5, x1: 20.4, y1: 13.5, solid: true },
+  { id: 'coffee', label: '', x0: 14.7, y0: 9.6, x1: 16.7, y1: 11.6, solid: true, shape: 'round' },
   { id: 'bar', label: 'Window bar', x0: 13, y0: 14, x1: 17.5, y1: 15, solid: true },
 ]
 
@@ -171,23 +191,24 @@ export interface Shot {
 
 export const roomShots: Record<RoomId, Shot> = {
   bedroom: { pos: [6, 20, 24], target: [6.5, 1, 7] },
-  bath: { pos: [2.5, 17, 14], target: [2.5, 1, 3.5] },
-  hall: { pos: [19, 21, 25], target: [18.5, 1, 7.5] },
-  sitout: { pos: [12.5, 14, 42], target: [12.5, 3, 18] },
+  bath: { pos: [21.5, 17, 13], target: [21.5, 1, 2.4] },
+  hall: { pos: [19, 21, 25], target: [18.5, 1, 8.5] },
+  sitout: { pos: [12.5, 16, 52], target: [12.5, 3, 26] },
 }
 
-export const overviewShot: Shot = { pos: [34, 44, 27], target: [12.5, 2, 10] }
-export const planShot: Shot = { pos: [12.5, 52, 13.01], target: [12.5, 0, 13] }
+export const overviewShot: Shot = { pos: [40, 52, 40], target: [12.5, 2, 18] }
+export const planShot: Shot = { pos: [12.5, 70, 19.51], target: [12.5, 0, 19.5] }
 
 export const tourStops: Shot[] = [
-  { label: 'Entry from the stairs', pos: [23.6, 5.4, 2.4], target: [14, 3.6, 12] },
-  { label: 'Kitchenette', pos: [17, 5.4, 6.5], target: [17, 3.4, 0] },
-  { label: 'Living + media wall', pos: [13.6, 5, 13.2], target: [24.5, 4, 8] },
-  { label: 'Folding door to the sit-out', pos: [20, 5.2, 8.5], target: [21.5, 4, 26] },
-  { label: 'Bedroom, bed facing west', pos: [9.5, 5.4, 13.6], target: [8.5, 3, 1] },
-  { label: 'Wardrobe + dresser', pos: [7.5, 5.4, 7.6], target: [0, 4.2, 12] },
-  { label: 'Bathroom', pos: [3.3, 5.2, 6.4], target: [1.6, 3.6, 0] },
+  { label: 'Entry from the stair landing', pos: [23.6, 5.4, 6.85], target: [14, 3.6, 10] },
+  { label: 'L-shaped kitchenette', pos: [15, 5.4, 8], target: [15.5, 3.4, 0] },
+  { label: 'Living + media wall', pos: [21.5, 5, 11], target: [12.4, 4, 10.75] },
+  { label: 'Folding door to the sit-out', pos: [21.5, 5.2, 8], target: [21.5, 4, 26] },
+  { label: 'Bedroom, bed facing west', pos: [7, 5.4, 13.6], target: [7, 3, 1] },
+  { label: 'Study corner + wardrobe', pos: [7.5, 5.4, 7.6], target: [0, 4.2, 6] },
+  { label: 'Bathroom', pos: [19.6, 5.2, 4.2], target: [24, 3.6, 1] },
   { label: 'Covered sit-out', pos: [12.5, 5.5, 26.5], target: [12.5, 5, 8] },
+  { label: 'Open terrace', pos: [20, 5.5, 37], target: [8, 4, 22] },
 ]
 
 /** 2D rectangles that block first-person walking. */
@@ -207,10 +228,14 @@ export function blockers(includeFurniture: boolean) {
     }
     push(cur, w.to)
   }
-  // Sit-out parapet and posts
-  rects.push([-EXT - 0.5, ROOF.edgeY, W + EXT + 0.5, ROOF.edgeY + 0.5])
-  rects.push([-EXT - 0.5, D + EXT, -EXT, ROOF.edgeY])
-  rects.push([W + EXT, D + EXT, W + EXT + 0.5, ROOF.edgeY])
+  // Terrace parapets, stair landing rails, stair flight and roof posts
+  rects.push([-EXT, D + EXT, 0, TERRACE_END + EXT])
+  rects.push([W, D + EXT, W + EXT, TERRACE_END + EXT])
+  rects.push([-EXT, TERRACE_END, W + EXT, TERRACE_END + EXT])
+  rects.push([STAIR.x1, STAIR.landingY0, STAIR.x1 + 0.3, STAIR.landingY1])
+  rects.push([STAIR.x0, STAIR.landingY0 - 0.3, STAIR.x1 + 0.3, STAIR.landingY0])
+  rects.push([STAIR.x0, STAIR.landingY1, STAIR.x1 + 0.3, stairEndY])
+  for (const x of ROOF.posts) rects.push([x - 0.17, ROOF.edgeY - 0.52, x + 0.17, ROOF.edgeY - 0.18])
   if (includeFurniture) for (const f of furniture) if (f.solid) rects.push([f.x0, f.y0, f.x1, f.y1])
   return rects
 }

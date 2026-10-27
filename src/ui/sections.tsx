@@ -13,11 +13,11 @@ import { fmtTime } from './format'
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const shots = {
-  hero: { pos: [34, 44, 27], target: [12.5, 2, 10] },
-  plan: { pos: [12.5, 50, 14.5], target: [12.5, 0, 14.4] },
+  hero: { pos: [40, 52, 40], target: [12.5, 2, 18] },
+  plan: { pos: [12.5, 64, 19.6], target: [12.5, 0, 19.5] },
   styles: { pos: [21, 27, 33], target: [12, 0, 7.5] },
-  day: { pos: [12.5, 7.5, 42], target: [12.5, 5.5, 8] },
-  specs: { pos: [-22, 30, 46], target: [12.5, 3, 11] },
+  day: { pos: [12.5, 8, 47], target: [12.5, 5.5, 8] },
+  specs: { pos: [-24, 34, 56], target: [12.5, 3, 18] },
 } satisfies Record<string, Shot>
 
 function useShot(ref: RefObject<HTMLElement | null>, shot: Shot, roof: boolean, extra?: () => void) {
@@ -43,7 +43,7 @@ export function Hero() {
   return (
     <section ref={ref} className="section hero">
       <motion.p className="eyebrow" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
-        Concept preview · v2
+        Concept preview · v3
       </motion.p>
       <h1>
         {words.map((w, i) => (
@@ -58,8 +58,8 @@ export function Hero() {
         ))}
       </h1>
       <motion.p className="lead" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}>
-        Bedroom suite with a 5×7 bath, a hall with kitchenette, and one insulated sheet roof that slopes west over a
-        12 ft covered sit-out.
+        A full 12 × 15 ft bedroom, a hall with an L-shaped kitchenette, a compact bath at the stair entry, and one
+        insulated sheet roof that slopes west over the first 12 ft of a 25 × 23 ft terrace.
       </motion.p>
       <motion.div className="hero-cta" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.8 }}>
         <button className="cta" onClick={() => set({ explorer: true, view: 'orbit', selectedRoom: null, selectedFeature: null })}>
@@ -103,9 +103,9 @@ export function PlanSection() {
           <p className="eyebrow">From your sketch to the plan</p>
           <h2>Suite on the north, social on the south</h2>
           <ul>
-            <li>Stairs land on the south wall, so the hall and kitchenette sit by the entry.</li>
-            <li>The bath takes the north-east corner window; the bed faces west through glass.</li>
-            <li>Everything opens onto a 12 ft covered sit-out.</li>
+            <li>Stairs arrive at the south-east corner; the entry opens into a short passage to every room.</li>
+            <li>The bath takes that corner, as sketched, freeing a full 12 × 15 ft bedroom with a study nook.</li>
+            <li>The hall opens onto a 12 ft covered sit-out, then open terrace out to 39 ft.</li>
           </ul>
           <div className="row">
             <button className={`chip ${dims ? 'on' : ''}`} onClick={() => setDims(!dims)} aria-pressed={dims}>Dimensions</button>
@@ -236,7 +236,7 @@ export function SpecsSection() {
       <div className="spec-grid">
         <div><h4>Roof</h4><p>Double-layer insulated sheets, single slope to the west. About 12'6" at the east wall and 9'9" at the sit-out edge, on slim steel posts.</p></div>
         <div><h4>Ceiling</h4><p>Flat false ceiling at 10 ft with cove LEDs. Bath ceiling at 8 ft with a storage loft above.</p></div>
-        <div><h4>Walls</h4><p>9" outer brick, 4.5" partitions. Chimney vents through the east wall; bath exhaust through the north wall.</p></div>
+        <div><h4>Walls</h4><p>9" outer brick, 4.5" partitions. Chimney and bath exhaust both vent through the east wall.</p></div>
         <div><h4>Light</h4><p>One skylight over the bed with a light-well and motorized blind. Glass-block corner window in the bath.</p></div>
       </div>
       <p className="disclaimer">

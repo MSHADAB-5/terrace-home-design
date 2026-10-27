@@ -46,10 +46,12 @@ h2 { max-width: 680px; margin-bottom: 24px; font-size: clamp(38px, 5vw, 68px); l
 .sketch .small { font-size: 0.4px; }
 .plan-clean { color: #ded8cc; }
 .plan .sitout { fill: rgba(120, 151, 125, 0.22); stroke: #849882; stroke-width: 0.07; }
+.plan .sitout.open { fill: rgba(120, 151, 125, 0.08); stroke-dasharray: 0.4 0.3; }
+.plan .parapet { fill: #b9b3a8; stroke: none; }
 .plan .roof-edge { stroke: #e7a27a; stroke-width: 0.14; stroke-dasharray: 0.45 0.25; }
 .plan .post { fill: #d5d1c8; }
 .stairs rect { fill: rgba(234,231,219,0.12); stroke: currentColor; stroke-width: 0.09; }
-.stairs line { stroke: currentColor; stroke-width: 0.05; }
+.stairs line, .stairs .arrow { fill: none; stroke: currentColor; stroke-width: 0.05; }
 .stairs text { fill: #bcbdb4; font: 0.48px 'Inter', sans-serif; }
 .plan .room { fill: rgba(242,237,225,0.035); stroke: none; cursor: pointer; transition: fill 0.2s; }
 .plan .room:hover, .plan .room.hover { fill: rgba(230, 143, 100, 0.15); }

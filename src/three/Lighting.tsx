@@ -7,7 +7,7 @@ import { themeById } from '../data/themes'
 import { mats } from './materials'
 
 const R = 80
-const CENTER = new THREE.Vector3(12.5, 0, 12)
+const CENTER = new THREE.Vector3(12.5, 0, 18)
 
 /** Sun rises in the east (−Z), arcs through the southern sky (+X) and sets in the west (+Z). */
 function sunDirection(time: number) {
@@ -37,7 +37,7 @@ function levels(scene: LightScene, day: number): Levels {
 }
 
 const lampSpots: [number, number, number][] = [
-  [8.5, 8.6, 8], [18.5, 8.6, 7.5], [2.5, 7.4, 3.5], [12.5, 8.2, 21], [18.5, 8.6, 13],
+  [8.5, 8.6, 8], [18.5, 8.6, 7.5], [21.5, 7.4, 2.4], [12.5, 8.2, 21], [18.5, 8.6, 13],
 ]
 
 export function Lighting() {
@@ -114,7 +114,7 @@ export function Lighting() {
       {lampSpots.map((p, i) => (
         <pointLight key={i} ref={el => { lamps.current[i] = el }} position={p} distance={22} decay={1.6} intensity={0} />
       ))}
-      <pointLight ref={tvLight} position={[23.6, 4.6, 8.75]} color="#6f8fff" distance={14} decay={1.5} intensity={0} />
+      <pointLight ref={tvLight} position={[13.9, 4.6, 10.75]} color="#6f8fff" distance={14} decay={1.5} intensity={0} />
       <Environment resolution={64} frames={1}>
         <Lightformer intensity={1.2} position={[0, 10, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[30, 30, 1]} />
         <Lightformer intensity={0.6} position={[0, 2, 20]} scale={[30, 6, 1]} color={themeById[theme].colors.led} />

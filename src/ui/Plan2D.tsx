@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { D, EXT, ROOF, W, furniture, rooms, walls, type Room, type Wall } from '../data/layout'
+import { D, EXT, ROOF, STAIR, TERRACE_END, W, furniture, rooms, stairEndY, walls, type Room, type Wall } from '../data/layout'
 import { useStore } from '../store'
 
 function segments(w: Wall) {
@@ -31,7 +31,7 @@ export function Plan2D({ showDims, furnishedPct = 100 }: { showDims: boolean; fu
 
   return (
     <div className="plan-wrap">
-      <svg className="plan" viewBox="-4 -6.5 40 36" role="img" aria-label="Floor plan, 25 by 15 feet with a 12 foot covered sit-out">
+      <svg className="plan" viewBox="-5 -3.5 38 45" role="img" aria-label="Floor plan: 25 by 15 foot home on a 25 by 39 foot terrace, bath at the stair corner, 12 foot covered sit-out then open terrace">
         <defs>
           <filter id="pencil">
             <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n" />
@@ -41,33 +41,46 @@ export function Plan2D({ showDims, furnishedPct = 100 }: { showDims: boolean; fu
             <line x1="0" y1="0" x2="0" y2="0.5" stroke="currentColor" strokeWidth="0.06" opacity="0.35" />
           </pattern>
           <clipPath id="furnished-clip">
-            <rect x={-4 + ((100 - furnishedPct) / 100) * 40} y={-7} width={40} height={40} />
+            <rect x={-5 + ((100 - furnishedPct) / 100) * 38} y={-4} width={38} height={46} />
           </clipPath>
         </defs>
 
         {/* Your sketch */}
         <g className="sketch" filter="url(#pencil)">
-          <path d={jitter([[-1, -1], [26, -1], [26, 16], [-1, 16], [-1, -1]])} />
-          <path d={jitter([[-1, 16], [-1, 28], [26, 28], [26, 16]])} strokeDasharray="0.6 0.5" />
-          <path d={jitter([[12, -1], [12, 16]])} />
-          <path d={jitter([[26, 0.5], [29, 0.5], [29, -3.5]])} />
-          <text x={4} y={8}>room</text>
-          <text x={17} y={8}>hall</text>
-          <text x={27} y={-1.3}>stairs</text>
-          <text x={9} y={23}>sit out</text>
-          <text x={-0.6} y={-1.6} className="small">window</text>
-          <text x={20} y={17.4} className="small">door?</text>
+          <path d={jitter([[-1, -1], [26, -1], [26, 40], [-1, 40], [-1, -1]])} />
+          <path d={jitter([[-1, 16], [26, 16]])} strokeDasharray="0.6 0.5" />
+          <path d={jitter([[18, -1], [18, 5], [26, 5]])} strokeDasharray="0.6 0.5" />
+          <path d={jitter([[26, 5.2], [29, 5.2], [29, 16.5]])} />
+          <path d={jitter([[26, 8.45], [28.5, 8.45]])} />
+          <path d={jitter([[21.5, 14.6], [21.5, 17.6], [21, 17], [21.5, 17.6], [22, 17]])} />
+          <text x={4} y={8}>built-up area</text>
+          <text x={4} y={28}>rest of the terrace</text>
+          <text x={26.6} y={4.3}>stairs</text>
+          <text x={20} y={2.8}>bath</text>
+          <text x={22.4} y={18.6} className="small">door to sit-out</text>
+          <text x={11.6} y={-1.6} className="small">25'</text>
+          <text x={-2.6} y={8} className="small">15'</text>
+          <text x={-2.6} y={28} className="small">39'</text>
         </g>
 
         <g className="plan-clean">
-          {/* Sit-out + terrace */}
-          <rect className="sitout" x={-EXT} y={D + EXT} width={W + 2 * EXT} height={ROOF.edgeY - D - EXT} />
+          {/* Sit-out: covered under the roof, then open terrace */}
+          <rect className="sitout" x={0} y={D + EXT} width={W} height={ROOF.edgeY - D - EXT} />
+          <rect className="sitout open" x={0} y={ROOF.edgeY} width={W} height={TERRACE_END - ROOF.edgeY} />
+          <rect className="parapet" x={-EXT} y={D + EXT} width={EXT} height={TERRACE_END - D} />
+          <rect className="parapet" x={W} y={D + EXT} width={EXT} height={TERRACE_END - D} />
+          <rect className="parapet" x={-EXT} y={TERRACE_END} width={W + 2 * EXT} height={EXT} />
           <line className="roof-edge" x1={-EXT - 1} y1={ROOF.edgeY + 0.6} x2={W + EXT + 1} y2={ROOF.edgeY + 0.6} />
           {ROOF.posts.map(x => <rect key={x} className="post" x={x - 0.17} y={ROOF.edgeY - 0.52} width={0.34} height={0.34} />)}
           <g className="stairs">
-            <rect x={28.6} y={-4} width={4.9} height={4.2} />
-            {Array.from({ length: 7 }, (_, i) => <line key={i} x1={29 + i * 0.65} y1={-3.5} x2={29 + i * 0.65} y2={0.2} />)}
-            <text x={31} y={-4.5}>stairs</text>
+            <rect x={STAIR.x0} y={STAIR.landingY0} width={STAIR.x1 - STAIR.x0} height={STAIR.landingY1 - STAIR.landingY0} />
+            <rect x={STAIR.x0} y={STAIR.landingY1} width={STAIR.x1 - STAIR.x0} height={stairEndY - STAIR.landingY1} />
+            {Array.from({ length: STAIR.treads - 1 }, (_, i) => {
+              const y = STAIR.landingY1 + (i + 1) * STAIR.tread
+              return <line key={i} x1={STAIR.x0} y1={y} x2={STAIR.x1} y2={y} />
+            })}
+            <text x={(STAIR.x0 + STAIR.x1) / 2} y={STAIR.landingY0 - 0.5} textAnchor="middle">stairs</text>
+            <path className="arrow" d={`M${(STAIR.x0 + STAIR.x1) / 2} ${STAIR.landingY1 + 0.6} V${stairEndY - 0.6} l-0.4 -0.6 M${(STAIR.x0 + STAIR.x1) / 2} ${stairEndY - 0.6} l0.4 -0.6`} />
           </g>
 
           {/* Rooms */}
@@ -100,9 +113,9 @@ export function Plan2D({ showDims, furnishedPct = 100 }: { showDims: boolean; fu
 
           {/* Doors */}
           <g className="doors">
-            <path d="M25 0.5 L21.8 0.5 A3.2 3.2 0 0 1 25 3.7" />
-            <path d="M12 14.6 L9.35 14.6 A2.65 2.65 0 0 1 12 11.95" />
-            <path d="M2.25 7.55 L4.75 7.55 M4.75 7.55 L7.2 7.55" strokeDasharray="0.3 0.2" />
+            <path d="M25 5.25 L21.8 5.25 A3.2 3.2 0 0 1 25 8.45" />
+            <path d="M12 7.9 L9.35 7.9 A2.65 2.65 0 0 1 12 5.25" />
+            <path d="M18.3 4.65 L20.8 4.65 M20.8 4.65 L23.3 4.65" strokeDasharray="0.3 0.2" />
             <path d="M19.5 15.4 l0.5 0.6 l0.5 -0.6 l0.5 0.6 l0.5 -0.6 l0.5 0.6 l0.5 -0.6 l0.5 0.6 l0.5 -0.6" />
           </g>
 
@@ -132,7 +145,7 @@ export function Plan2D({ showDims, furnishedPct = 100 }: { showDims: boolean; fu
             </g>
           ))}
 
-          <g className="compass" transform="translate(-2.4 25)">
+          <g className="compass" transform="translate(-2.2 36.5)">
             <circle r={1.4} />
             <path d="M0 -1.1 L0.35 0 L0 1.1 L-0.35 0 Z" transform="rotate(90)" />
             <text y={-1.8}>E</text>
@@ -145,12 +158,20 @@ export function Plan2D({ showDims, furnishedPct = 100 }: { showDims: boolean; fu
               <text x={W / 2} y={-2.5}>25'</text>
               <line x1={-2.2} y1={0} x2={-2.2} y2={D} />
               <text x={-2.5} y={D / 2} transform={`rotate(-90 -2.5 ${D / 2})`}>15'</text>
-              <line x1={W + 2} y1={D + EXT} x2={W + 2} y2={ROOF.edgeY} />
-              <text x={W + 2.3} y={21.5} transform={`rotate(90 ${W + 2.3} 21.5)`}>12' sit-out</text>
-              <line x1={0} y1={7.9} x2={5} y2={7.9} />
-              <text x={2.5} y={8.6}>5'</text>
-              <line x1={5.6} y1={0} x2={5.6} y2={7} />
-              <text x={6.3} y={3.6}>7'</text>
+              <line x1={-4.2} y1={0} x2={-4.2} y2={TERRACE_END} />
+              <text x={-4.5} y={TERRACE_END / 2} transform={`rotate(-90 -4.5 ${TERRACE_END / 2})`}>terrace 39'</text>
+              <line x1={30.5} y1={0} x2={30.5} y2={5.2} />
+              <text x={30.8} y={2.6} transform="rotate(90 30.8 2.6)">5'2"</text>
+              <line x1={30.5} y1={5.2} x2={30.5} y2={8.45} />
+              <text x={30.8} y={6.8} transform="rotate(90 30.8 6.8)">3'3"</text>
+              <line x1={30.5} y1={D + EXT} x2={30.5} y2={ROOF.edgeY} />
+              <text x={30.8} y={21.75} transform="rotate(90 30.8 21.75)">12' covered</text>
+              <line x1={30.5} y1={ROOF.edgeY} x2={30.5} y2={TERRACE_END} />
+              <text x={30.8} y={33.4} transform="rotate(90 30.8 33.4)">11'3" open</text>
+              <line x1={18} y1={-1.2} x2={W} y2={-1.2} />
+              <text x={21.5} y={-1.45}>bath 7'</text>
+              <line x1={26.4} y1={0} x2={26.4} y2={4.75} />
+              <text x={26.7} y={2.4} transform="rotate(90 26.7 2.4)">4'9"</text>
             </g>
           )}
         </g>

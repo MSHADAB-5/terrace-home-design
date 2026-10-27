@@ -1,5 +1,5 @@
 import { Html, Line } from '@react-three/drei'
-import { D, EXT, ROOF, W, roofY } from '../data/layout'
+import { D, EXT, ROOF, TERRACE_END, W, roofY } from '../data/layout'
 import { useStore } from '../store'
 
 type V3 = [number, number, number]
@@ -33,11 +33,15 @@ export function Dimensions() {
     <>
       <Dim a={[0, y, -EXT - 2]} b={[W, y, -EXT - 2]} label="25' inside" />
       <Dim a={[-EXT - 2, y, 0]} b={[-EXT - 2, y, D]} label="15' inside" />
-      <Dim a={[0, 8.3, 7.6]} b={[5, 8.3, 7.6]} label="bath 5'" />
-      <Dim a={[5.2, 8.3, 0]} b={[5.2, 8.3, 7]} label="7'" />
+      <Dim a={[-EXT - 4, y, 0]} b={[-EXT - 4, y, TERRACE_END]} label="terrace 39'" />
+      <Dim a={[18, 8.3, 5.5]} b={[W, 8.3, 5.5]} label="bath 7'" />
+      <Dim a={[17.3, 8.3, 0]} b={[17.3, 8.3, 4.75]} label={`4'9"`} />
       <Dim a={[2.4, 7.4, 7.5]} b={[2.4, 7.4, 14.5]} label="wardrobe 7'" />
-      <Dim a={[6.2, 2.4, 7.2]} b={[11.2, 2.4, 7.2]} label="bed 5'" />
-      <Dim a={[W + EXT + 2, y, D + EXT]} b={[W + EXT + 2, y, ROOF.edgeY]} label="sit-out 12'" />
+      <Dim a={[4.5, 2.4, 7.2]} b={[9.5, 2.4, 7.2]} label="bed 5'" />
+      <Dim a={[W + EXT + 0.2, 7.6, 0]} b={[W + EXT + 0.2, 7.6, 5.2]} label={`5'2"`} tick={0.3} />
+      <Dim a={[W + EXT + 0.2, 7.6, 5.2]} b={[W + EXT + 0.2, 7.6, 8.45]} label={`door 3'3"`} tick={0.3} />
+      <Dim a={[30.25, y, D + EXT]} b={[30.25, y, ROOF.edgeY]} label="covered 12'" />
+      <Dim a={[30.25, y, ROOF.edgeY]} b={[30.25, y, TERRACE_END]} label={`open 11'3"`} />
       <Height x={W + EXT + 0.6} z={-EXT} h={ROOF.eastHeight} label={`roof 12'6"`} />
       <Height x={W + EXT + 0.6} z={ROOF.edgeY - 0.35} h={roofY(ROOF.edgeY)} label={`9'9"`} />
     </>

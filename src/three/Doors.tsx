@@ -56,18 +56,19 @@ function BathSlider() {
   const p = useDoorProgress('bath')
   const ref = useRef<Group>(null)
   useFrame(() => {
-    if (ref.current) ref.current.position.x = 3.5 + 2.45 * p.current
+    if (ref.current) ref.current.position.x = 19.55 + 2.45 * p.current
   })
   return (
     <Clickable id="bath">
-      <group ref={ref} position={[3.5, 3.55, 7.48]}>
+      {/* Runs on the bath side of the wall so it never meets the open entry door */}
+      <group ref={ref} position={[19.55, 3.55, 4.69]}>
         <mesh geometry={boxGeo(2.6, 7.1, 0.06)} material={mats.frosted} />
         {Array.from({ length: 12 }, (_, i) => (
-          <mesh key={i} position={[-1.2 + i * 0.22, 0, 0.035]} geometry={boxGeo(0.03, 7, 0.02)} material={mats.frosted} />
+          <mesh key={i} position={[-1.2 + i * 0.22, 0, -0.035]} geometry={boxGeo(0.03, 7, 0.02)} material={mats.frosted} />
         ))}
-        <mesh position={[-1.15, 0, 0.06]} geometry={boxGeo(0.06, 1.6, 0.06)} material={mats.metal} />
+        <mesh position={[-1.15, 0, -0.06]} geometry={boxGeo(0.06, 1.6, 0.06)} material={mats.metal} />
       </group>
-      <mesh position={[4.6, 7.2, 7.5]} geometry={boxGeo(5.4, 0.12, 0.12)} material={mats.frame} />
+      <mesh position={[20.8, 7.2, 4.69]} geometry={boxGeo(5.4, 0.12, 0.12)} material={mats.frame} />
     </Clickable>
   )
 }
@@ -106,8 +107,8 @@ function FoldingDoor() {
 export function Doors() {
   return (
     <Explode level={2}>
-      <SwingDoor id="entry" pivot={[25.15, 0.55]} len={3.2} dir={1} openAngle={-Math.PI / 2 * 0.95} m="wood" />
-      <SwingDoor id="bedroom" pivot={[12.19, 14.55]} len={2.65} dir={-1} openAngle={Math.PI / 2 * 0.95} m="wall" />
+      <SwingDoor id="entry" pivot={[25.15, 5.25]} len={3.2} dir={1} openAngle={-Math.PI / 2 * 0.95} m="wood" />
+      <SwingDoor id="bedroom" pivot={[12.19, 7.85]} len={2.65} dir={-1} openAngle={Math.PI / 2 * 0.95} m="wall" />
       <BathSlider />
       <FoldingDoor />
     </Explode>

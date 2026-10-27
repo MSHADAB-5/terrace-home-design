@@ -16,9 +16,9 @@ const RADIUS = 0.7
 const SPEED = 6
 
 const doorRects = {
-  entry: [25, 0.5, 25.75, 3.75],
-  bedroom: [12, 11.9, 12.375, 14.6],
-  bath: [2.25, 7, 4.75, 7.375],
+  entry: [25, 5.2, 25.75, 8.45],
+  bedroom: [12, 5.2, 12.375, 7.9],
+  bath: [18.3, 4.75, 20.8, 5.125],
   sitout: [19.5, 15, 23.5, 15.75],
 } as const
 
@@ -28,8 +28,8 @@ function Walk() {
   const staticRects = useRef(blockers(true))
 
   useEffect(() => {
-    camera.position.set(23.2, EYE, 2.6)
-    camera.lookAt(14, EYE - 0.6, 12)
+    camera.position.set(23.2, EYE, 6.85)
+    camera.lookAt(14, EYE - 0.6, 9)
     const down = (e: KeyboardEvent) => keys.current.add(e.code)
     const up = (e: KeyboardEvent) => keys.current.delete(e.code)
     window.addEventListener('keydown', down)
@@ -47,7 +47,7 @@ function Walk() {
     for (const id of Object.keys(doorRects) as (keyof typeof doorRects)[])
       if (!doors[id]) rects.push([...doorRects[id]])
     const hit = (x: number, z: number) =>
-      x < -5 || x > 33 || z < -4 || z > 28 ||
+      x < -1 || x > 29.5 || z < -1 || z > 39.5 ||
       rects.some(([x0, y0, x1, y1]) => x > x0 - RADIUS && x < x1 + RADIUS && z > y0 - RADIUS && z < y1 + RADIUS)
 
     let fwd = walkInput.forward

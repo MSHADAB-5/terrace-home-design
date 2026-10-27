@@ -43,6 +43,7 @@ export const mats = {
   leaf: std({ color: '#4d7a45', roughness: 0.8 }),
   pot: std({ color: '#b86b4b', roughness: 0.9 }),
   frame: std({ color: '#2a2a2a', roughness: 0.4, metalness: 0.7 }),
+  railing: std({ color: '#1f2f5c', roughness: 0.45, metalness: 0.5 }),
   blind: std({ color: '#efe8dc', roughness: 1, side: THREE.DoubleSide }),
 }
 
